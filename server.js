@@ -93,10 +93,16 @@ app.post("/register", checkNotAuthenticated, async (req, res) => {
   }
 });
 
-app.delete("/logout", (req, res) => {
-  req.logout();
-  res.redirect("/login");
-});
+app
+  .route("/logout")
+  .get((req, res) => {
+    req.logout();
+    res.redirect("/login");
+  })
+  .post((req, res) => {
+    req.logout();
+    res.redirect("/login");
+  });
 
 function checkAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
@@ -112,4 +118,4 @@ function checkNotAuthenticated(req, res, next) {
   next();
 }
 
-app.listen(8000);
+app.listen(7000);

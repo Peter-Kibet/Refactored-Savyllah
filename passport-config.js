@@ -20,10 +20,21 @@ function initialize(passport, getUserByEmail, getUserById) {
   };
 
   passport.use(new LocalStrategy({ usernameField: "email" }, authenticateUser));
+
   passport.serializeUser((user, done) => done(null, user.id));
   passport.deserializeUser((id, done) => {
     return done(null, getUserById(id));
   });
+
+  // Middleware to check if the user is authenticated
+  const ensureAuthenticated = (req, res, next) => {
+    if (req.isAuthenticated()) {
+      return next();
+    }
+    res.redirect("/login"); // Redirect to login page if not authenticated
+  };
+
+  return ensureAuthenticated;
 }
 
 module.exports = initialize;
