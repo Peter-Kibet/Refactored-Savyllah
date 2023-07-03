@@ -55,6 +55,20 @@ mongoose
 
 app.set("view engine", "ejs");
 
+function checkAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect("/login");
+}
+
+function checkNotAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return res.redirect("/");
+  }
+  next();
+}
+
 app.get("/", checkAuthenticated, (req, res) => {
   res.render("index.ejs", { name: req.user.name });
 });
@@ -93,29 +107,15 @@ app.post("/register", checkNotAuthenticated, async (req, res) => {
   }
 });
 
-app
-  .route("/logout")
-  .get((req, res) => {
-    req.logout();
-    res.redirect("/login");
-  })
-  .post((req, res) => {
-    req.logout();
-    res.redirect("/login");
+app.get("/logout", (req, res) => {
+  req.logout((err) => {
+    if (err) {
+      // handle error
+    } else {
+      // redirect to home page
+      res.redirect("/login");
+    }
   });
-
-function checkAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  res.redirect("/login");
-}
-
-function checkNotAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
-    return res.redirect("/");
-  }
-  next();
-}
+});
 
 app.listen(7000);

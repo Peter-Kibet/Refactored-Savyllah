@@ -2,6 +2,8 @@ let navbar = document.querySelector(".header .navbar");
 let searchForm = document.querySelector(".header .search-form");
 let loginForm = document.querySelector(".header .login-form");
 let contactInfo = document.querySelector(".contact-info");
+const loginBtn = document.querySelector("#login-btn");
+const logoutLink = document.querySelector("#logout");
 
 document.querySelector("#menu-btn").onclick = () => {
   navbar.classList.toggle("active");
@@ -16,7 +18,7 @@ document.querySelector("#search-btn").onclick = () => {
 };
 
 document.querySelector("#login-btn").onclick = () => {
-  loginForm.classList.toggle("active");
+  logoutLink.style.display = "block";
   navbar.classList.remove("active");
   searchForm.classList.remove("active");
 };
@@ -31,8 +33,7 @@ document.querySelector("#close-contact-info").onclick = () => {
 
 window.onscroll = () => {
   navbar.classList.remove("active");
-  searchForm.classList.remove("active");
-  loginForm.classList.remove("active");
+  logoutLink.style.display = "none";
   contactInfo.classList.remove("active");
 };
 

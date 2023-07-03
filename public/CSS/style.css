@@ -127,7 +127,7 @@ section {
 
 .header .navbar a {
   font-size: 2rem;
-  color: var(--white);
+  color: var(--yellow);
   text-transform: capitalize;
   margin: 0 1rem;
 }
@@ -169,6 +169,10 @@ section {
 }
 
 .header #menu-btn {
+  display: none;
+}
+
+#logout {
   display: none;
 }
 
